@@ -49,7 +49,7 @@ public class StoryListFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-       deals =(ArrayList<StoryDetails>)getArguments().getSerializable("story");
+        deals =(ArrayList<StoryDetails>)getArguments().getSerializable("story");
 
         adapter = new StoryItemAdapter(getActivity().getApplicationContext(), deals);
         mRecyclerView.setAdapter(adapter);
@@ -70,16 +70,52 @@ public class StoryListFragment extends Fragment {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         //if(adapter!=null)
-        /*adapter.SetOnItemClickListener(new StoryItemAdapter.OnItemClickListener() {
+        adapter.SetOnItemClickListener(new StoryItemAdapter.OnItemClickListener() {
+
+
+
 
             @Override
             public void onItemClick(View v, int position) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
-                intent.putExtra(getString(R.string.CONSTANT_DEAL_ITEM), deals.get(position));
-                startActivity(intent);
+
+                StoryDetails selected = new StoryDetails();
+
+                for(int i =0; i<deals.size();i++)
+                {
+                    if(deals.get(position).getDb()!=null)
+                    {
+                        if(deals.get(position).getDb().equals(deals.get(i).getId()))
+                        {
+                            deals.get(position).setUsername(deals.get(i).getUsername());
+
+                            deals.get(position).setAbout(deals.get(i).getAbout());
+
+                            deals.get(position).setImage(deals.get(i).getImage());
+
+                            deals.get(position).setFollowers(deals.get(i).getFollowers());
+
+                            deals.get(position).setFollowing(deals.get(i).getFollowing());
+
+                            deals.get(position).setIs_following(deals.get(i).getIs_following());
+
+                            selected = deals.get(position);
+
+                        }
+                    }
+                    else
+                    {
+                        selected = deals.get(position);
+                    }
+
+
+                }
+
+                getFragmentManager().beginTransaction().addToBackStack("detail")
+                        .replace(R.id.content_frame, StoryDetailFragment.newInstance(selected)).commit();
+
 
             }
-        });*/
+        });
     }
 
 

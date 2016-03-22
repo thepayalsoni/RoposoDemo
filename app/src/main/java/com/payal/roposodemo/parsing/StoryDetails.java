@@ -39,7 +39,7 @@ public class StoryDetails implements Serializable {
     private String createdOn;
 
     @SerializedName("is_following")
-    private String is_following;
+    private boolean is_following;
 
     //////////////////////////////////
 
@@ -143,11 +143,11 @@ public class StoryDetails implements Serializable {
         this.createdOn = createdOn;
     }
 
-    public String getIs_following() {
+    public boolean getIs_following() {
         return is_following;
     }
 
-    public void setIs_following(String is_following) {
+    public void setIs_following(boolean is_following) {
         this.is_following = is_following;
     }
 

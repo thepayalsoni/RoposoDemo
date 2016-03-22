@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<StoryDetails> result) {
 
-            getSupportFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction().addToBackStack("home")
                     .replace(R.id.content_frame, StoryListFragment.newInstance(result)).commit();
 
 

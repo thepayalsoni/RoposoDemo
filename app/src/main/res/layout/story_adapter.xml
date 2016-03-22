@@ -17,12 +17,12 @@
             android:id="@+id/user_image"
             android:layout_width="50dip"
             android:layout_height="50dip"
-            android:src="@android:drawable/ic_btn_speak_now"
             android:layout_centerHorizontal="true"
 
             />
 
         <LinearLayout
+            android:id="@+id/ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/user_image"
@@ -32,11 +32,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/user_handle"
-                android:text="jkjk"/>
+                android:textSize="18dip"
+                android:textColor="@android:color/holo_orange_dark"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/about"/>
+                android:id="@+id/about"
+                android:textSize="16dip"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,22 +51,29 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:id="@+id/followers"/>
+                    android:id="@+id/followers"
+                    android:gravity="center"/>
 
                 <TextView
                     android:layout_width="0dip"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:id="@+id/following"/>
+                    android:id="@+id/following"
+                    android:gravity="center"/>
 
             </LinearLayout>
         </LinearLayout>
-        <TextView
+
+
+        <Button
+            android:layout_below="@id/ll"
+            android:id="@+id/follow"
             android:layout_width="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_height="wrap_content"
-            android:id="@+id/user_since"/>
+            android:text="Follow"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"></Button>
 
     </RelativeLayout>
 

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -62,7 +63,7 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
 
 
         if(stories.get(position).getType()==null) {
-            holder.user_handle.setText(stories.get(position).getHandle() + "( " + stories.get(position).getUsername() + " )");
+            holder.user_handle.setText(stories.get(position).getUsername() + "( " + stories.get(position).getHandle() + " )");
 
             File file = imloader.getDiscCache().get(stories.get(position).getImage());
             if (!file.exists()) {
@@ -75,8 +76,8 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
             }
 
             holder.about.setText(stories.get(position).getAbout());
-            holder.followers.setText("Followers \n\r" + stories.get(position).getFollowers());
-            holder.following.setText("Following \n\r" + stories.get(position).getFollowing());
+            holder.followers.setText("Followers\n\r" + stories.get(position).getFollowers());
+            holder.following.setText("Following\n\r" + stories.get(position).getFollowing());
         }
         else
         {
@@ -95,9 +96,53 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
             holder.about.setText(stories.get(position).getDescription());
             holder.followers.setText("Likes \n\r" + stories.get(position).getLikes_count());
             holder.following.setText("Comments \n\r" + stories.get(position).getComment_count());
+
+
         }
 
+        if(stories.get(position).getIs_following())
+        {
+            holder.follow.setText("Following");
+        }
+        else
+            holder.follow.setText("Follow");
 
+        final int  p = position;
+        final ViewHolder h = holder;
+
+        holder.follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(stories.get(p).getIs_following())
+                {
+                    stories.get(p).setIs_following(false);
+                    h.follow.setText("Follow");
+
+
+                }
+                else {
+                    stories.get(p).setIs_following(true);
+                    h.follow.setText("Following");
+                }
+
+
+                for(int i =0;i <stories.size();i++) {
+                    if (stories.get(p).getDb() != null) {
+
+                        if(stories.get(p).getDb().equals(stories.get(i).getId()))
+                        {
+                            stories.get(p).setIs_following(stories.get(i).getIs_following());
+
+                        }
+
+
+                    }
+                }
+
+
+            }
+        });
 
 
     }
@@ -115,6 +160,7 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
 
         ImageView image;
         TextView user_handle, about, followers,following,userSince;
+        Button follow;
 
 
         public ViewHolder(View itemView) {
@@ -123,9 +169,9 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
             about = (TextView) itemView.findViewById(R.id.about);
             followers = (TextView) itemView.findViewById(R.id.followers);
             following = (TextView) itemView.findViewById(R.id.following);
-            userSince = (TextView) itemView.findViewById(R.id.user_since);
+           // userSince = (TextView) itemView.findViewById(R.id.user_since);
             image = (ImageView) itemView.findViewById(R.id.user_image);
-
+            follow =(Button) itemView.findViewById(R.id.follow);
 
 
 
@@ -137,10 +183,14 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
             image.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
             itemView.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View v) {
+
+
+
             if (mItemClickListener != null) {
                 mItemClickListener.onItemClick(v, getPosition());
             }
