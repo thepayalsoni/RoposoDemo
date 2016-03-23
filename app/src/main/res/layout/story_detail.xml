@@ -121,11 +121,16 @@
             android:id="@+id/follow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dip"
+            android:textSize="14dip"
             android:text="Follow"
+            android:background="@drawable/buttonbg"
+            android:padding="5dip"
+            android:minWidth="0dip"
+            android:minHeight="0dip"
             android:textColor="@android:color/black"
             android:layout_below="@+id/ll_likes"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dip"
 
 
             />

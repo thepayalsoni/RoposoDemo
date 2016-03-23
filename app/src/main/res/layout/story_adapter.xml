@@ -69,9 +69,14 @@
         <Button
             android:layout_below="@id/ll"
             android:id="@+id/follow"
+            android:background="@drawable/buttonbg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Follow"
+            android:padding="5dip"
+            android:minWidth="0dip"
+            android:minHeight="0dip"
+            android:layout_marginBottom="5dip"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"></Button>
 
