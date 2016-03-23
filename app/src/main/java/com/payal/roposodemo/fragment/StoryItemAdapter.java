@@ -31,7 +31,7 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
     Context context;
     Bitmap bm;
     ImageLoader imloader;
-    static ArrayList<StoryDetails> stories;
+   public static ArrayList<StoryDetails> stories;
 
 
     OnItemClickListener mItemClickListener;
@@ -122,28 +122,37 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
                     h.follow.setText("Following");
                 }
 
+                updateFollow(p);
 
-                for (int i = 0; i < stories.size(); i++) {
-                    if (stories.get(p).getDb() != null) {
 
-                        if (stories.get(p).getDb().equals(stories.get(i).getId())) {
-                            stories.get(i).setIs_following(stories.get(p).getIs_following());
-
-                        }
-                    } else {
-                        if (stories.get(p).getId().equals(stories.get(i).getDb())) {
-                            stories.get(i).setIs_following(stories.get(p).getIs_following());
-
-                        }
-
-                    }
-                }
             }
         });
 
 
     }
 
+
+   private void  updateFollow(int p)
+    {
+        for (int i = 0; i < stories.size(); i++) {
+            if (stories.get(p).getDb()!= null) {
+
+                if (stories.get(p).getDb().equals(stories.get(i).getId()) || (stories.get(p).getDb().equalsIgnoreCase(stories.get(i).getDb()))) {
+                    stories.get(i).setIs_following(stories.get(p).getIs_following());
+
+                }
+            }
+
+            else {
+                if (stories.get(p).getId().equals(stories.get(i).getDb())) {
+                    stories.get(i).setIs_following(stories.get(p).getIs_following());
+
+                }
+
+            }
+        }
+
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {

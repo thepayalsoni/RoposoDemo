@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.payal.roposodemo.fragment.StoryItemAdapter;
 import com.payal.roposodemo.parsing.StoryDetails;
 
 import java.io.File;
@@ -127,6 +128,28 @@ public class StoryDetailFragment extends Fragment {
                     detail.setIs_following(true);
                     follow.setText("Following");
                 }
+
+                int p = StoryItemAdapter.stories.indexOf(detail);
+
+               for (int i = 0; i < StoryItemAdapter.stories.size(); i++) {
+                        if (StoryItemAdapter.stories.get(p).getDb()!= null) {
+
+                            if (StoryItemAdapter.stories.get(p).getDb().equals(StoryItemAdapter.stories.get(i).getId()) || (StoryItemAdapter.stories.get(p).getDb().equalsIgnoreCase(StoryItemAdapter.stories.get(i).getDb()))) {
+                                StoryItemAdapter.stories.get(i).setIs_following(StoryItemAdapter.stories.get(p).getIs_following());
+
+                            }
+                        }
+
+                        else {
+                            if (StoryItemAdapter.stories.get(p).getId().equals(StoryItemAdapter.stories.get(i).getDb())) {
+                                StoryItemAdapter.stories.get(i).setIs_following(StoryItemAdapter.stories.get(p).getIs_following());
+
+                            }
+
+                        }
+                    }
+
+
             }
         });
 
