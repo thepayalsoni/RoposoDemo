@@ -16,7 +16,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.payal.roposodemo.R;
-import com.payal.roposodemo.Update;
 import com.payal.roposodemo.parsing.StoryDetails;
 
 import java.io.File;
@@ -25,7 +24,7 @@ import java.util.ArrayList;
 /**
  * Created by payal on 21/3/16.
  */
-public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.ViewHolder> implements Update {
+public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.ViewHolder>  {
 
     LayoutInflater inflater;
     Context context;
@@ -211,7 +210,5 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
         this.mItemClickListener = mItemClickListener;
     }
 
-    @Override
-    public void afterDataChanged(Update mUpdate) {
-    }
+
 }

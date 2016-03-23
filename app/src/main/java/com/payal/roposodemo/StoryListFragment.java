@@ -68,17 +68,9 @@ public class StoryListFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        //if(adapter!=null)
 
-        adapter.afterDataChanged(new Update() {
-            @Override
-            public void afterDataChanged(Update mupdate) {
 
-                adapter = new StoryItemAdapter(getActivity().getApplicationContext(), deals);
 
-                mRecyclerView.setAdapter(adapter);
-            }
-        });
         adapter.SetOnItemClickListener(new StoryItemAdapter.OnItemClickListener() {
 
 
