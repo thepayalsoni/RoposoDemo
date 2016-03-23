@@ -6,15 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.payal.roposodemo.R;
+import com.payal.roposodemo.parsing.StoryDetails;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-
-import com.payal.roposodemo.StoryListFragment;
-import com.payal.roposodemo.parsing.StoryDetails;
 
 /**
  * Created by payal on 21/3/16.
@@ -71,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<StoryDetails> result) {
 
-            getSupportFragmentManager().beginTransaction().addToBackStack("home")
+            getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, StoryListFragment.newInstance(result)).commit();
 
 

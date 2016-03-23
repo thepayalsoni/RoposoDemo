@@ -1,6 +1,5 @@
 package com.payal.roposodemo;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -70,6 +69,16 @@ public class StoryListFragment extends Fragment {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         //if(adapter!=null)
+
+        adapter.afterDataChanged(new Update() {
+            @Override
+            public void afterDataChanged(Update mupdate) {
+
+                adapter = new StoryItemAdapter(getActivity().getApplicationContext(), deals);
+
+                mRecyclerView.setAdapter(adapter);
+            }
+        });
         adapter.SetOnItemClickListener(new StoryItemAdapter.OnItemClickListener() {
 
 

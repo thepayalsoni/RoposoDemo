@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,6 +16,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.payal.roposodemo.R;
+import com.payal.roposodemo.Update;
 import com.payal.roposodemo.parsing.StoryDetails;
 
 import java.io.File;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Created by payal on 21/3/16.
  */
-public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.ViewHolder> {
+public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.ViewHolder> implements Update {
 
     LayoutInflater inflater;
     Context context;
@@ -35,7 +35,8 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
 
 
     OnItemClickListener mItemClickListener;
-    public StoryItemAdapter(Context context,ArrayList<StoryDetails> stories) {
+
+    public StoryItemAdapter(Context context, ArrayList<StoryDetails> stories) {
         this.context = context;
         this.stories = stories;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -62,7 +63,7 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
 
 
-        if(stories.get(position).getType()==null) {
+        if (stories.get(position).getType() == null) {
             holder.user_handle.setText(stories.get(position).getUsername() + "( " + stories.get(position).getHandle() + " )");
 
             File file = imloader.getDiscCache().get(stories.get(position).getImage());
@@ -78,9 +79,7 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
             holder.about.setText(stories.get(position).getAbout());
             holder.followers.setText("Followers\n\r" + stories.get(position).getFollowers());
             holder.following.setText("Following\n\r" + stories.get(position).getFollowing());
-        }
-        else
-        {
+        } else {
             holder.user_handle.setText(stories.get(position).getTitle());
 
             File file = imloader.getDiscCache().get(stories.get(position).getSi());
@@ -100,52 +99,51 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
 
         }
 
-        if(stories.get(position).getIs_following())
-        {
+        if (stories.get(position).getIs_following()) {
             holder.follow.setText("Following");
-        }
-        else
+        } else
             holder.follow.setText("Follow");
 
-        final int  p = position;
+
+        final int p = position;
         final ViewHolder h = holder;
 
         holder.follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(stories.get(p).getIs_following())
-                {
+                if (stories.get(p).getIs_following()) {
                     stories.get(p).setIs_following(false);
                     h.follow.setText("Follow");
 
 
-                }
-                else {
+                } else {
                     stories.get(p).setIs_following(true);
                     h.follow.setText("Following");
                 }
 
 
-                for(int i =0;i <stories.size();i++) {
+                for (int i = 0; i < stories.size(); i++) {
                     if (stories.get(p).getDb() != null) {
 
-                        if(stories.get(p).getDb().equals(stories.get(i).getId()))
-                        {
-                            stories.get(p).setIs_following(stories.get(i).getIs_following());
+                        if (stories.get(p).getDb().equals(stories.get(i).getId())) {
+                            stories.get(i).setIs_following(stories.get(p).getIs_following());
+
+                        }
+                    } else {
+                        if (stories.get(p).getId().equals(stories.get(i).getDb())) {
+                            stories.get(i).setIs_following(stories.get(p).getIs_following());
 
                         }
 
-
                     }
                 }
-
-
             }
         });
 
 
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -159,7 +157,7 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView image;
-        TextView user_handle, about, followers,following,userSince;
+        TextView user_handle, about, followers, following, userSince;
         Button follow;
 
 
@@ -169,10 +167,9 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
             about = (TextView) itemView.findViewById(R.id.about);
             followers = (TextView) itemView.findViewById(R.id.followers);
             following = (TextView) itemView.findViewById(R.id.following);
-           // userSince = (TextView) itemView.findViewById(R.id.user_since);
+            // userSince = (TextView) itemView.findViewById(R.id.user_since);
             image = (ImageView) itemView.findViewById(R.id.user_image);
-            follow =(Button) itemView.findViewById(R.id.follow);
-
+            follow = (Button) itemView.findViewById(R.id.follow);
 
 
             RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
@@ -190,7 +187,6 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
         public void onClick(View v) {
 
 
-
             if (mItemClickListener != null) {
                 mItemClickListener.onItemClick(v, getPosition());
             }
@@ -199,10 +195,14 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
     }
 
     public interface OnItemClickListener {
-        public void onItemClick(View view , int position);
+        public void onItemClick(View view, int position);
     }
 
     public void SetOnItemClickListener(final OnItemClickListener mItemClickListener) {
         this.mItemClickListener = mItemClickListener;
+    }
+
+    @Override
+    public void afterDataChanged(Update mUpdate) {
     }
 }

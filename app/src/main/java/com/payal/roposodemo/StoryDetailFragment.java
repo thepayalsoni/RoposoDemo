@@ -3,10 +3,6 @@ package com.payal.roposodemo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +13,9 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.payal.roposodemo.fragment.StoryItemAdapter;
 import com.payal.roposodemo.parsing.StoryDetails;
 
 import java.io.File;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.ServiceConfigurationError;
 
 /**
  * Created by payal on 22/3/16.
@@ -106,6 +98,39 @@ public class StoryDetailFragment extends Fragment {
         likes.setText("Liked by " + detail.getLikes_count());
         if(detail.getComment_count()!=null)
         comments.setText(detail.getComment_count()+" Comments");
+
+
+        if(detail.getIs_following())
+        {
+
+            follow.setText("Following");
+
+
+        }
+        else {
+
+            follow.setText("Follow");
+        }
+
+
+        follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(detail.getIs_following())
+                {
+                    detail.setIs_following(false);
+                    follow.setText("Follow");
+
+
+                }
+                else {
+                    detail.setIs_following(true);
+                    follow.setText("Following");
+                }
+            }
+        });
+
+
 
         return v;
     }
