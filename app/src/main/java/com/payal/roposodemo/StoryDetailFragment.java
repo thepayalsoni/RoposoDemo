@@ -133,6 +133,8 @@ public class StoryDetailFragment extends Fragment {
 
                for (int i = 0; i < StoryItemAdapter.stories.size(); i++) {
 
+                   StoryItemAdapter.stories.get(i).setIs_following(StoryItemAdapter.stories.get(p).getIs_following());
+
 
                         /*if (StoryItemAdapter.stories.get(p).getDb()!= null) {
 
