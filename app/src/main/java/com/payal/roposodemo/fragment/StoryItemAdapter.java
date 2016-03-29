@@ -16,6 +16,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.payal.roposodemo.R;
+import com.payal.roposodemo.UpdateInterface;
 import com.payal.roposodemo.parsing.StoryDetails;
 
 import java.io.File;
@@ -24,14 +25,14 @@ import java.util.ArrayList;
 /**
  * Created by payal on 21/3/16.
  */
-public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.ViewHolder>  {
+public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.ViewHolder> {
 
     LayoutInflater inflater;
     Context context;
     Bitmap bm;
     ImageLoader imloader;
-   public static ArrayList<StoryDetails> stories;
-
+    public static ArrayList<StoryDetails> stories;
+   public static  UpdateInterface updateInterface =null;
 
     OnItemClickListener mItemClickListener;
 
@@ -121,6 +122,7 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
                     h.follow.setText("Following");
                 }
 
+
                 updateFollow(p);
 
 
@@ -131,10 +133,13 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
     }
 
 
-   private void  updateFollow(int p)
-    {
+    private void updateFollow(int p) {
+
+
         for (int i = 0; i < stories.size(); i++) {
-            if (stories.get(p).getDb()!= null) {
+
+            StoryItemAdapter.stories.get(i).setIs_following(StoryItemAdapter.stories.get(p).getIs_following());
+           /* if (stories.get(p).getDb()!= null) {
 
                 if (stories.get(p).getDb().equals(stories.get(i).getId()) || (stories.get(p).getDb().equalsIgnoreCase(stories.get(i).getDb()))) {
                     stories.get(i).setIs_following(stories.get(p).getIs_following());
@@ -148,8 +153,13 @@ public class StoryItemAdapter extends RecyclerView.Adapter<StoryItemAdapter.View
 
                 }
 
-            }
+            }*/
         }
+
+        if(updateInterface!=null)
+            updateInterface.afterUpdate(p);
+
+
 
     }
 

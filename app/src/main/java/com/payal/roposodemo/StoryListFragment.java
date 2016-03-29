@@ -1,6 +1,7 @@
 package com.payal.roposodemo;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,21 +20,21 @@ import java.util.ArrayList;
  */
 
 
-public class StoryListFragment extends Fragment {
+public class StoryListFragment extends Fragment implements UpdateInterface {
 
     RecyclerView mRecyclerView;
     StoryItemAdapter adapter;
     ArrayList<StoryDetails> deals;
 
+
     public static StoryListFragment newInstance(ArrayList<StoryDetails> data) {
         StoryListFragment fragment = new StoryListFragment();
         Bundle args = new Bundle();
-        args.putSerializable("story",data);
+        args.putSerializable("story", data);
         fragment.setArguments(args);
 
         return fragment;
     }
-
 
 
     @Override
@@ -47,13 +48,10 @@ public class StoryListFragment extends Fragment {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        deals =(ArrayList<StoryDetails>)getArguments().getSerializable("story");
-
+        deals = (ArrayList<StoryDetails>) getArguments().getSerializable("story");
+        StoryItemAdapter.updateInterface = StoryListFragment.this;
         adapter = new StoryItemAdapter(getActivity().getApplicationContext(), deals);
         mRecyclerView.setAdapter(adapter);
-
-
 
 
         return v;
@@ -69,43 +67,35 @@ public class StoryListFragment extends Fragment {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
-
-
         adapter.SetOnItemClickListener(new StoryItemAdapter.OnItemClickListener() {
-
-
 
 
             @Override
             public void onItemClick(View v, int position) {
 
                 StoryDetails selected = new StoryDetails();
+                StoryDetails deatail = deals.get(position);
+                for (int i = 0; i < deals.size(); i++) {
 
-                for(int i =0; i<deals.size();i++)
-                {
-                    if(deals.get(position).getDb()!=null)
-                    {
-                        if(deals.get(position).getDb().equals(deals.get(i).getId()))
-                        {
-                            deals.get(position).setUsername(deals.get(i).getUsername());
+                    if (deatail.getDb() != null) {
+                        if (deatail.getDb().equals(deals.get(i).getId())) {
+                            deatail.setUsername(deals.get(i).getUsername());
 
-                            deals.get(position).setAbout(deals.get(i).getAbout());
+                            deatail.setAbout(deals.get(i).getAbout());
 
-                            deals.get(position).setImage(deals.get(i).getImage());
+                            deatail.setImage(deals.get(i).getImage());
 
-                            deals.get(position).setFollowers(deals.get(i).getFollowers());
+                            deatail.setFollowers(deals.get(i).getFollowers());
 
-                            deals.get(position).setFollowing(deals.get(i).getFollowing());
+                            deatail.setFollowing(deals.get(i).getFollowing());
 
-                            deals.get(position).setIs_following(deals.get(i).getIs_following());
+                            deatail.setIs_following(deals.get(i).getIs_following());
 
-                            selected = deals.get(position);
+                            selected = deatail;
 
                         }
-                    }
-                    else
-                    {
-                        selected = deals.get(position);
+                    } else {
+                        selected = deatail;
                     }
 
 
@@ -120,6 +110,15 @@ public class StoryListFragment extends Fragment {
     }
 
 
+    private Parcelable recyclerViewState;
+
+    @Override
+    public void afterUpdate(int p) {
+
+        recyclerViewState = mRecyclerView.getLayoutManager().onSaveInstanceState();//save
+        mRecyclerView.swapAdapter(new StoryItemAdapter(getActivity().getApplicationContext(), deals), false);
+        mRecyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);//restore
 
 
+    }
 }

@@ -132,7 +132,9 @@ public class StoryDetailFragment extends Fragment {
                 int p = StoryItemAdapter.stories.indexOf(detail);
 
                for (int i = 0; i < StoryItemAdapter.stories.size(); i++) {
-                        if (StoryItemAdapter.stories.get(p).getDb()!= null) {
+
+
+                        /*if (StoryItemAdapter.stories.get(p).getDb()!= null) {
 
                             if (StoryItemAdapter.stories.get(p).getDb().equals(StoryItemAdapter.stories.get(i).getId()) || (StoryItemAdapter.stories.get(p).getDb().equalsIgnoreCase(StoryItemAdapter.stories.get(i).getDb()))) {
                                 StoryItemAdapter.stories.get(i).setIs_following(StoryItemAdapter.stories.get(p).getIs_following());
@@ -146,7 +148,7 @@ public class StoryDetailFragment extends Fragment {
 
                             }
 
-                        }
+                        }*/
                     }
 
 
